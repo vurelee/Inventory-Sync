@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>库存同步系统</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>库存同步系统</h1>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>库存展示</h2>
+          <button id="syncBtn">同步库存</button>
+        </div>
+        <div class="controls">
+          <input id="searchInput" placeholder="输入 SKU 模糊搜索..." />
+          <span id="syncInfo"></span>
+        </div>
+        <table>
+          <thead id="inventoryHead"></thead>
+          <tbody id="inventoryBody"></tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>建立发货单</h2>
+        <form id="shippingForm">
+          <div class="row">
+            <label>跟踪号</label>
+            <input name="trackingNo" required />
+          </div>
+          <div class="row">
+            <label>箱数</label>
+            <input name="boxCount" type="number" min="1" required />
+          </div>
+
+          <h3>SKU 信息</h3>
+          <div id="itemRows"></div>
+          <button type="button" id="addItemBtn">+ 添加 SKU</button>
+          <button type="submit">保存发货单</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>发货单列表</h2>
+        <ul id="ordersList"></ul>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

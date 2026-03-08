@@ -1,0 +1,9 @@
+{
+  "name": "inventory-sync",
+  "version": "1.0.0",
+  "description": "库存同步与发货单管理网页应用",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
