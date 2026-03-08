@@ -51,7 +51,7 @@ function sendJson(res, status, data) {
 }
 
 function serveStatic(req, res, pathname) {
-  const normalizedPath = pathname === '/' ? '/index.html' : pathname;
+  const normalizedPath = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
   const filePath = path.join(__dirname, 'public', normalizedPath);
   if (!filePath.startsWith(path.join(__dirname, 'public'))) {
     res.writeHead(403);

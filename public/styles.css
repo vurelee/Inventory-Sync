@@ -8,10 +8,52 @@ body {
   color: #1f2937;
 }
 
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: #111827;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.top-nav-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-nav nav {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-link {
+  color: #d1d5db;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  color: #fff;
+  background: #2563eb;
+}
+
 .container {
   max-width: 1080px;
   margin: 24px auto;
   padding: 0 16px 24px;
+}
+
+.with-nav-offset {
+  margin-top: 78px;
 }
 
 .panel {

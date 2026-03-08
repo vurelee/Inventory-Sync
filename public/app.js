@@ -3,6 +3,7 @@ const searchInput = document.getElementById('searchInput');
 const syncInfo = document.getElementById('syncInfo');
 const inventoryHead = document.getElementById('inventoryHead');
 const inventoryBody = document.getElementById('inventoryBody');
+
 const itemRows = document.getElementById('itemRows');
 const addItemBtn = document.getElementById('addItemBtn');
 const shippingForm = document.getElementById('shippingForm');
@@ -11,6 +12,8 @@ const ordersList = document.getElementById('ordersList');
 let warehouseNames = [];
 
 function createItemRow(defaultItem = { sku: '', quantity: 1 }) {
+  if (!itemRows) return;
+
   const div = document.createElement('div');
   div.className = 'item-row';
   div.innerHTML = `
@@ -23,6 +26,8 @@ function createItemRow(defaultItem = { sku: '', quantity: 1 }) {
 }
 
 async function loadInventory() {
+  if (!searchInput || !inventoryHead || !inventoryBody || !syncInfo) return;
+
   const query = encodeURIComponent(searchInput.value || '');
   const res = await fetch(`/api/inventory?query=${query}`);
   const data = await res.json();
@@ -45,6 +50,8 @@ async function loadInventory() {
 }
 
 async function syncInventory() {
+  if (!syncBtn) return;
+
   syncBtn.disabled = true;
   syncBtn.textContent = '同步中...';
   try {
@@ -57,6 +64,8 @@ async function syncInventory() {
 }
 
 async function loadOrders() {
+  if (!ordersList) return;
+
   const res = await fetch('/api/shipping-orders');
   const data = await res.json();
   ordersList.innerHTML = data.orders
@@ -70,45 +79,62 @@ async function loadOrders() {
     .join('');
 }
 
-shippingForm.onsubmit = async (e) => {
-  e.preventDefault();
-  const formData = new FormData(shippingForm);
-  const items = Array.from(itemRows.querySelectorAll('.item-row')).map((row) => ({
-    sku: row.querySelector('.sku-input').value,
-    quantity: Number(row.querySelector('.qty-input').value)
-  }));
+if (shippingForm) {
+  shippingForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(shippingForm);
+    const items = Array.from(itemRows.querySelectorAll('.item-row')).map((row) => ({
+      sku: row.querySelector('.sku-input').value,
+      quantity: Number(row.querySelector('.qty-input').value)
+    }));
 
-  const payload = {
-    trackingNo: formData.get('trackingNo'),
-    boxCount: Number(formData.get('boxCount')),
-    items
+    const payload = {
+      trackingNo: formData.get('trackingNo'),
+      boxCount: Number(formData.get('boxCount')),
+      items
+    };
+
+    const res = await fetch('/api/shipping-orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.error || '保存失败');
+      return;
+    }
+
+    shippingForm.reset();
+    itemRows.innerHTML = '';
+    createItemRow();
+    await loadOrders();
   };
+}
 
-  const res = await fetch('/api/shipping-orders', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+if (searchInput) {
+  searchInput.oninput = () => {
+    loadInventory();
+  };
+}
 
-  const data = await res.json();
-  if (!res.ok) {
-    alert(data.error || '保存失败');
-    return;
-  }
+if (addItemBtn) {
+  addItemBtn.onclick = () => createItemRow();
+}
 
-  shippingForm.reset();
-  itemRows.innerHTML = '';
+if (syncBtn) {
+  syncBtn.onclick = syncInventory;
+}
+
+if (itemRows) {
   createItemRow();
-  await loadOrders();
-};
+}
 
-searchInput.oninput = () => {
+if (inventoryBody) {
   loadInventory();
-};
+}
 
-addItemBtn.onclick = () => createItemRow();
-syncBtn.onclick = syncInventory;
-
-createItemRow();
-loadInventory();
-loadOrders();
+if (ordersList) {
+  loadOrders();
+}

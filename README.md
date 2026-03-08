@@ -2,15 +2,19 @@
 
 一个轻量的 Node.js 网页应用，支持：
 
-1. **库存展示与同步**
+1. **库存展示与同步（独立页面）**
    - 从多个仓库 API 拉取库存。
    - 合并展示总库存和分仓库存。
    - 支持 SKU 模糊搜索。
    - 同步结果缓存到本地 `data/inventory-cache.json`。
 
-2. **建立发货单**
+2. **建立发货单（独立页面）**
    - 类似亚马逊头程入库单，包含跟踪号、箱数和 SKU 明细。
    - 发货单保存到 `data/shipping-orders.json`。
+
+页面通过顶部固定菜单栏切换：
+- `/index.html`：库存展示
+- `/shipping.html`：建立发货单
 
 ## 运行方式
 
@@ -18,7 +22,7 @@
 npm start
 ```
 
-打开 `http://localhost:3000`。
+打开 `http://localhost:3000/index.html`。
 
 ## API 一览
 

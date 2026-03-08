@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>库存同步系统 - 建立发货单</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="top-nav">
+      <div class="top-nav-inner">
+        <strong>库存同步系统</strong>
+        <nav>
+          <a class="nav-link" href="/index.html">库存展示</a>
+          <a class="nav-link active" href="/shipping.html">建立发货单</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container with-nav-offset">
+      <section class="panel">
+        <h2>建立发货单</h2>
+        <form id="shippingForm">
+          <div class="row">
+            <label>跟踪号</label>
+            <input name="trackingNo" required />
+          </div>
+          <div class="row">
+            <label>箱数</label>
+            <input name="boxCount" type="number" min="1" required />
+          </div>
+
+          <h3>SKU 信息</h3>
+          <div id="itemRows"></div>
+          <button type="button" id="addItemBtn">+ 添加 SKU</button>
+          <button type="submit">保存发货单</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>发货单列表</h2>
+        <ul id="ordersList"></ul>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
