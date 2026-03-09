@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>库存同步系统 - 库存展示</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="top-nav">
+      <div class="top-nav-inner">
+        <strong>库存同步系统</strong>
+        <nav>
+          <a class="nav-link active" href="/index.html">库存展示</a>
+          <a class="nav-link" href="/shipping.html">建立发货单</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container with-nav-offset">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>库存展示</h2>
+          <button id="syncBtn">同步库存</button>
+        </div>
+        <div class="controls">
+          <input id="searchInput" placeholder="输入 SKU 模糊搜索..." />
+          <span id="syncInfo"></span>
+        </div>
+        <table>
+          <thead id="inventoryHead"></thead>
+          <tbody id="inventoryBody"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
